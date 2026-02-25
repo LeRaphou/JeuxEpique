@@ -13,6 +13,10 @@ switch ($path) {
         render('home', ['title' => 'Accueil']);
         break;
 
+    case '/login':
+        render('login', ['title' => 'Connexion']);
+        break;
+
     default:
         http_response_code(404);
         render('404', ['title' => 'Page introuvable']);
