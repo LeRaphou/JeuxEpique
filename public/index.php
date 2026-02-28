@@ -43,7 +43,47 @@ switch ($path) {
         break;
 
     case '/login':
-        render('login', ['title' => 'Connexion']);
+        $message = '';
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = $_POST['username'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            $userId = $auth->authenticate($username, $password);
+
+            if ($userId !== false) {
+                $auth->logUserIn($userId);
+                header('Location: /');
+                exit;
+            } else {
+                $message = 'Identifiants incorrects';
+            }
+        }
+
+        render('login', ['title' => 'Connexion', 'message' => $message]);
+        break;
+
+    case '/register':
+        $message = '';
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = $_POST['username'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $phone = $_POST['phone'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            $userId = $auth->addUser($username, $email, $phone, $password);
+
+            if ($userId !== false) {
+                $auth->logUserIn($userId);
+                header('Location: /');
+                exit;
+            } else {
+                $message = 'Erreur lors de l\'inscription';
+            }
+        }
+
+        render('register', ['title' => 'Inscription', 'message' => $message]);
         break;
 
     default:
