@@ -38,6 +38,7 @@ $freeGames = [
 ];
 
 $currentSlide = 0;
+$username = $username ?? false;
 ?>
 <!doctype html>
 <html lang="fr">
@@ -52,6 +53,18 @@ $currentSlide = 0;
     <link rel="stylesheet" href="/assets/css/home.css"/>
 </head>
 <body>
+<div id="user_modal" class="modal">
+    <div class="modal_content">
+        <h1><?= $username ?></h1>
+
+        <form method="post" action="">
+            <input type="hidden" name="logout" value="true"/>
+            <button>Se déconnecter</button>
+        </form>
+
+        <a href="#" class="modal_close">×</a>
+    </div>
+</div>
 <div class="launcher">
     <aside class="sidebar">
         <div class="sidebar-logo">
@@ -80,6 +93,7 @@ $currentSlide = 0;
             </a>
         </nav>
 
+        <?php if ($username !== false): ?>
         <div class="sidebar-bottom">
             <a href="#" class="s-btn" title="Paramètres">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -87,11 +101,12 @@ $currentSlide = 0;
                     <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
                 </svg>
             </a>
-            <div class="s-avatar">
+            <a href="#user_modal" class="s-avatar">
                 <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar"/>
                 <span class="online-dot"></span>
-            </div>
+            </a>
         </div>
+        <?php endif; ?>
     </aside>
 
     <!-- SECONDARY NAV -->
@@ -129,19 +144,13 @@ $currentSlide = 0;
                     </svg>
                     <span class="notif-dot"></span>
                 </button>
-                <button class="top-btn" title="Panier">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="9" cy="21" r="1"/>
-                        <circle cx="20" cy="21" r="1"/>
-                        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-                    </svg>
-                </button>
                 <div class="top-user">
+                    <?php if (!$username) : ?>
+                        <a href="/login">Se connecter</a>
+                    <?php else : ?>
                     <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar"/>
-                    <span>Joueur</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                        <polyline points="6 9 12 15 18 9"/>
-                    </svg>
+                    <span><?= $username?></span>
+                    <?php endif ?>
                 </div>
             </div>
         </header>
@@ -249,7 +258,5 @@ $currentSlide = 0;
         </div>
     </main>
 </div>
-
-<script src="/assets/js/app.js"></script>
 </body>
 </html>
