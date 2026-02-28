@@ -11,17 +11,21 @@
 </head>
 <body>
 <div class="container">
-    <h1>Login</h1>
+    <h1>Se connecter</h1>
     <form action="/login" method="post">
         <div class="form-group">
-            <label for="username">Username:</label>
+            <label for="username">Nom d'utilisateur:</label>
             <input type="text" id="username" name="username" required>
         </div>
         <div class="form-group">
-            <label for="password">Password:</label>
+            <label for="password">Mot de passe:</label>
             <input type="password" id="password" name="password" required>
         </div>
         <button type="submit">Login</button>
+        <?php if (!empty($message)): ?>
+            <p style="color:red"><?= $message ?></p>
+        <?php endif; ?>
     </form>
+    <a href="/register">Vous voulez créer un compte ?</a>
 </div>
 </body>
