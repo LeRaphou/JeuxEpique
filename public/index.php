@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once(__DIR__ . '/../src/Auth.php');
 require __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
@@ -8,7 +9,7 @@ $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
 
-$uri = "mysql://" . $_ENV["DB_USER"] .":" . $_ENV["DB_PASSWORD"] . "@" . $_ENV["DB_HOST"] . ":" . $_ENV["DB_PORT"] . "/" . $_ENV["DB_NAME"] ."?ssl-mode=REQUIRED";
+$uri = "mysql://" . $_ENV["DB_USER"] . ":" . $_ENV["DB_PASSWORD"] . "@" . $_ENV["DB_HOST"] . ":" . $_ENV["DB_PORT"] . "/" . $_ENV["DB_NAME"] . "?ssl-mode=REQUIRED";
 
 $fields = parse_url($uri);
 
@@ -26,7 +27,12 @@ try {
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
 
-function render(string $view, array $data = []): void {
+$auth = new Auth($db);
+
+$userId = $auth->loggedInUser();
+
+function render(string $view, array $data = []): void
+{
     extract($data, EXTR_SKIP);
     require __DIR__ . "/../views/{$view}.php";
 }
