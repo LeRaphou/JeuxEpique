@@ -39,7 +39,15 @@ function render(string $view, array $data = []): void
 
 switch ($path) {
     case '/':
-        render('home', ['title' => 'Accueil']);
+        $username = $auth->getUsername();
+        render('home', ['title' => 'Accueil', 'username' => $username]);
+
+
+        if (isset($_POST['logout'])) {
+            $auth->logUserOut();
+            header('Location: /');
+            exit;
+        }
         break;
 
     case '/login':
