@@ -13,6 +13,59 @@
 }
 
 /* ════════���══════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════════════ */
+
+.modal {
+    visibility: hidden;
+    transform: translateX(-1rem);
+    z-index: 1000;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .4s;
+}
+
+.modal:target {
+    visibility: visible;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.modal_content {
+    position: absolute;
+    bottom: 1rem;
+    left: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--c-bg3);
+    border: 1px solid var(--c-border);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+.modal_close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: grey;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* ════════���══════════════════════════════════════════════
    SIDEBAR
 ═══════════════════════════════════════════════════════ */
 .sidebar {
