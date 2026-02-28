@@ -92,3 +92,12 @@ button[type="submit"]:active {
     background: var(--c-border);
     opacity: 0.6;
 }
+
+a {
+    display: block;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--c-blue);
+    text-decoration: none;
+    transition: color 0.15s;
+}
