@@ -40,7 +40,7 @@ function render(string $view, array $data = []): void
 switch ($path) {
     case '/':
         $username = $auth->getUsername();
-        render('home', ['title' => 'Accueil', 'username' => $username]);
+        render('home', ['title' => 'Accueil', 'username' => $username, 'isAdmin' => $auth->getUserRole($userId)]);
 
 
         if (isset($_POST['logout'])) {
@@ -48,6 +48,14 @@ switch ($path) {
             header('Location: /');
             exit;
         }
+        break;
+
+    case '/admin':
+        if ($auth->getUserRole($userId) === false) {
+            header('Location: /');
+            exit;
+        }
+        render('admin', ['title' => 'Admin']);
         break;
 
     case '/login':
