@@ -124,4 +124,28 @@ class Auth
 
         return $user["username"];
     }
+
+    public function getUserRole(int|false $userId): bool
+    {
+        if ($userId === false) {
+            return false;
+        }
+        try {
+            $stmt = $this->db->prepare("SELECT admin FROM Users WHERE id = :id");
+            $stmt->execute([
+                ":id" => $userId,
+            ]);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+
+        $user = $stmt->fetchColumn();
+
+        if ($user === false) {
+            return false;
+        }
+
+        return boolval($user);
+    }
 }
