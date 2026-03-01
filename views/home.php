@@ -59,7 +59,7 @@ $username = $username ?? false;
 
         <form method="post" action="">
             <input type="hidden" name="logout" value="true"/>
-            <button>Se déconnecter</button>
+            <button class="btn-modal">Se déconnecter</button>
         </form>
 
         <a href="#" class="modal_close">×</a>
