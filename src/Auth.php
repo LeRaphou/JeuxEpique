@@ -74,6 +74,9 @@ class Auth
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+
+        session_regenerate_id(true);
+
         $_SESSION['logged_in_user_id'] = $userId;
     }
 
@@ -82,6 +85,9 @@ class Auth
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+
+        session_regenerate_id(true);
+
         $_SESSION['logged_in_user_id'] = null;
     }
 
