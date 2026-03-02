@@ -1,20 +1,9 @@
-/* ═══════════════════════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════════════════
-   LAYOUT
-═══════════════════════════════════════════════════════ */
 .launcher {
     display: grid;
-    grid-template-columns: var(--sidebar-w) var(--secnav-w) 1fr;
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
     grid-template-rows: 1fr;
     height: 100vh;
 }
-
-/* ════════���══════════════════════════════════════════════
-   MODAL
-═══════════════════════════════════════════════════════ */
 
 .modal {
     visibility: hidden;
@@ -80,9 +69,6 @@
     transition: all 0.15s;
 }
 
-/* ════════���══════════════════════════════════════════════
-   SIDEBAR
-═══════════════════════════════════════════════════════ */
 .sidebar {
     grid-column: 1;
     background: var(--c-bg2);
@@ -206,133 +192,8 @@
     border: 2px solid var(--c-bg2);
 }
 
-/* ═══════════════════════════════════════════════════════
-   SECONDARY NAV
-═══════════════════════════════════════════════════════ */
-.secondary-nav {
-    grid-column: 2;
-    background: var(--c-bg2);
-    border-right: 1px solid var(--c-border);
-    display: flex;
-    flex-direction: column;
-    padding: 20px 0 16px;
-    overflow: hidden;
-}
-
-.sec-nav-top {
-    padding: 0 16px 16px;
-    border-bottom: 1px solid var(--c-border);
-}
-
-.sec-nav-title {
-    font-size: 18px;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 16px;
-    letter-spacing: -0.3px;
-}
-
-.sec-nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.sec-link {
-    display: block;
-    padding: 8px 12px;
-    border-radius: 8px;
-    color: var(--c-gray);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.15s;
-}
-
-.sec-link:hover {
-    background: var(--c-hover);
-    color: var(--c-white);
-}
-
-.sec-link.active {
-    background: var(--c-hover);
-    color: var(--c-white);
-}
-
-.sec-nav-search {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 14px 16px 12px;
-    background: var(--c-bg3);
-    border: 1px solid var(--c-border);
-    border-radius: 8px;
-    padding: 8px 12px;
-    transition: border-color 0.2s;
-}
-
-.sec-nav-search:focus-within {
-    border-color: var(--c-blue);
-}
-
-.sec-nav-search svg {
-    width: 14px;
-    height: 14px;
-    color: var(--c-gray2);
-    flex-shrink: 0;
-}
-
-.sec-nav-search input {
-    background: none;
-    border: none;
-    outline: none;
-    color: var(--c-white);
-    font-size: 12px;
-    font-family: inherit;
-    width: 100%;
-}
-
-.sec-nav-search input::placeholder {
-    color: var(--c-gray2);
-}
-
-.sec-nav-filters {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    padding: 0 8px;
-    overflow-y: auto;
-}
-
-.filter-pill {
-    text-align: left;
-    padding: 7px 10px;
-    border-radius: 8px;
-    border: none;
-    background: none;
-    color: var(--c-gray);
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.15s;
-}
-
-.filter-pill:hover {
-    background: var(--c-hover);
-    color: var(--c-white);
-}
-
-.filter-pill.active {
-    background: rgba(0, 116, 228, 0.12);
-    color: var(--c-blue);
-}
-
-/* ═══════════════════════════════════════════════════════
-   MAIN CONTENT
-═══════════════════════════════════════════════════════ */
 .main {
-    grid-column: 3;
+    grid-column: 2;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -460,9 +321,6 @@
     border-radius: 3px;
 }
 
-/* ═══════════════════════════════════════════════════════
-   HERO CAROUSEL
-═══════════════════════════════════════════════════════ */
 .hero {
     position: relative;
     display: flex;
@@ -558,6 +416,7 @@
 
 .hero-btns {
     display: flex;
+    width: 100%;
     gap: 10px;
     flex-wrap: wrap;
 }
@@ -679,9 +538,6 @@
     color: var(--c-gray);
 }
 
-/* ═══════════════════════════════════════════════════════
-   SECTIONS
-═══════════════════════════════════════════════════════ */
 .section {
     padding: 32px 28px 0;
 }
