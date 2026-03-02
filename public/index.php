@@ -40,7 +40,8 @@ function render(string $view, array $data = []): void
 switch ($path) {
     case '/':
         $username = $auth->getUsername();
-        render('home', ['title' => 'Accueil', 'username' => $username, 'isAdmin' => $auth->getUserRole($userId)]);
+        $gamesInfo = $db->query('SELECT * FROM Game')->fetchAll(PDO::FETCH_ASSOC);
+        render('home', ['title' => 'Accueil', 'username' => $username, 'isAdmin' => $auth->getUserRole($userId), 'gamesInfo' => $gamesInfo]);
 
 
         if (isset($_POST['logout'])) {
