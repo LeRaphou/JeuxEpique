@@ -56,7 +56,17 @@ switch ($path) {
             header('Location: /');
             exit;
         }
-        render('admin', ['title' => 'Admin']);
+
+        $users = $db->query('SELECT id, username, email, phone FROM Users')->fetchAll(PDO::FETCH_ASSOC);
+        $username = $auth->getUsername();
+        $gamesInfo = $db->query('SELECT * FROM Game')->fetchAll(PDO::FETCH_ASSOC);
+        render('admin', ['title' => 'Admin', 'username' => $username, 'isAdmin' => $auth->getUserRole($userId), 'gamesInfo' => $gamesInfo, "users" => $users]);
+
+        if (isset($_POST['logout'])) {
+            $auth->logUserOut();
+            header('Location: /');
+            exit;
+        }
         break;
 
     case '/login':
