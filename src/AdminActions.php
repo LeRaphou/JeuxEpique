@@ -2,10 +2,12 @@
 
 namespace App;
 
+use PDO;
+
 class AdminActions
 {
-    private $user;
-    private $db;
+    private int $user;
+    private PDO $db;
 
     public function __construct($user, $db)
     {
