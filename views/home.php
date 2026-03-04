@@ -1,5 +1,5 @@
 <?php
-require(__DIR__ . '/../src/refactorer.php');
+require (__DIR__ . '/../src/refactorer.php');
 $gamesInfo = $gamesInfo ?? [];
 $featuredGames = array_slice($gamesInfo, 0, 3);
 $currentSlide = 0;
@@ -17,7 +17,6 @@ $isAdmin = $isAdmin ?? false;
           rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/app.css"/>
     <link rel="stylesheet" href="/assets/css/home.css"/>
-    <link rel="stylesheet" href="/assets/css/overlay.css"/>
 </head>
 <body>
 <div id="user_modal" class="modal">
@@ -29,7 +28,7 @@ $isAdmin = $isAdmin ?? false;
             <button class="btn-modal">Se déconnecter</button>
         </form>
 
-        <a href="/" class="modal_close">×</a>
+        <a href="#" class="modal_close">×</a>
     </div>
 </div>
 <div class="launcher">
@@ -43,6 +42,13 @@ $isAdmin = $isAdmin ?? false;
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                     <polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+            </a>
+            <a href="#" class="s-btn" title="Boutique">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 01-8 0"/>
                 </svg>
             </a>
             <a href="#" class="s-btn" title="Bibliothèque">
@@ -141,10 +147,9 @@ $isAdmin = $isAdmin ?? false;
                 <div class="hero-thumbs">
                     <?php foreach ($featuredGames as $i => $g): ?>
                         <div class="hero-thumb <?= $i === 0 ? 'active' : '' ?>" data-target="<?= $i ?>">
-                            <img src="data:image/png;base64, <?= htmlspecialchars($g['game_image']) ?>"
-                                 alt="<?= htmlspecialchars($g['game_name']) ?>"/>
+                            <img src="data:image/png;base64, <?= htmlspecialchars($g['game_image']) ?>" alt="<?= htmlspecialchars($g['game_name']) ?>"/>
                             <div class="thumb-info">
-                                <span class="thumb-title"><?= htmlspecialchars($g['game_name']) ?></span>
+                                <span class="thumb-title"><?= htmlspecialchars($g['game_name'])?></span>
                                 <span class="thumb-price"><?= refactorPrice(htmlspecialchars($g['price'])) . "€" ?></span>
                             </div>
                         </div>

@@ -323,7 +323,7 @@
 .store-img-wrap {
     position: relative;
     aspect-ratio: 3/4;
-    overflow: hidden;
+    overflow: hidden;display: block;
 }
 
 .store-img-wrap img {
@@ -360,10 +360,12 @@
     padding-bottom: 16px;
     opacity: 0;
     transition: opacity 0.2s;
+    pointer-events: none;
 }
 
 .store-card:hover .store-hover-overlay {
     opacity: 1;
+    pointer-events: auto;
 }
 
 .btn-cart-quick {
@@ -380,7 +382,15 @@
     cursor: pointer;
     font-family: inherit;
     white-space: nowrap;
+    text-decoration: none;
+    pointer-events: auto;
 }
+
+.btn-cart-quick:hover {
+    background: var(--c-blue-h);
+}
+
+
 
 .btn-cart-quick svg {
     width: 13px;
