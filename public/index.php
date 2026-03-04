@@ -59,7 +59,7 @@ switch ($path) {
 
         if ($userId !== false) {
             $stmt = $db->prepare('
-                SELECT g.game_name, g.game_image, g.game_type
+                SELECT g.id, g.game_name, g.game_image, g.game_type
                 FROM Game g
                 INNER JOIN Library_game l ON l.id_game = g.id
                 WHERE l.id_user = :userId
@@ -71,7 +71,7 @@ switch ($path) {
         render('Library', [
             'title'        => 'Bibliothèque',
             'username'     => $username,
-            'isAdmin'      => $auth->getUserRole($userId),
+            'isAdmin'      => $auth->isAdmin($userId),
             'libraryGames' => $libraryGames,
         ]);
         break;
@@ -135,13 +135,80 @@ switch ($path) {
         render('payment', [
             'title'        => 'Paiement',
             'username'     => $username,
-            'isAdmin'      => $auth->getUserRole($userId),
+            'isAdmin'      => $auth->isAdmin($userId),
             'game'         => $game,
             'alreadyOwned' => $alreadyOwned,
             'message'      => $message,
         ]);
         break;
 
+
+    case '/game':
+        $username = $auth->getUsername();
+        $gameId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $game = null;
+        $achievements = [];
+        $unlockedIds = [];
+        $ownsGame = false;
+
+        if ($gameId > 0) {
+            $stmtGame = $db->prepare('SELECT * FROM Game WHERE id = :id');
+            $stmtGame->execute([':id' => $gameId]);
+            $game = $stmtGame->fetch(PDO::FETCH_ASSOC) ?: null;
+        }
+
+        if (!$game) {
+            http_response_code(404);
+            render('404', ['title' => 'Jeu introuvable']);
+            break;
+        }
+
+        // Récupérer les succès du jeu
+        $stmtAch = $db->prepare('SELECT * FROM Achievement WHERE game_id = :gameId');
+        $stmtAch->execute([':gameId' => $gameId]);
+        $achievements = $stmtAch->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($userId !== false) {
+            // Vérifier si l'utilisateur possède le jeu
+            $stmtOwns = $db->prepare('SELECT 1 FROM Library_game WHERE id_user = :userId AND id_game = :gameId');
+            $stmtOwns->execute([':userId' => $userId, ':gameId' => $gameId]);
+            $ownsGame = (bool)$stmtOwns->fetchColumn();
+
+            // Récupérer les succès débloqués
+            $stmtUnlocked = $db->prepare('SELECT achievement_id FROM Achievement_association WHERE user_id = :userId');
+            $stmtUnlocked->execute([':userId' => $userId]);
+            $unlockedIds = $stmtUnlocked->fetchAll(PDO::FETCH_COLUMN);
+
+            // Débloquer un succès via POST
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unlock_achievement_id']) && $ownsGame) {
+                $achId = (int)$_POST['unlock_achievement_id'];
+                // Vérifier que le succès appartient bien à ce jeu
+                $stmtCheckAch = $db->prepare('SELECT 1 FROM Achievement WHERE id = :achId AND game_id = :gameId');
+                $stmtCheckAch->execute([':achId' => $achId, ':gameId' => $gameId]);
+                if ($stmtCheckAch->fetchColumn()) {
+                    // Vérifier pas déjà débloqué
+                    $stmtCheckUnlock = $db->prepare('SELECT 1 FROM Achievement_association WHERE user_id = :userId AND achievement_id = :achId');
+                    $stmtCheckUnlock->execute([':userId' => $userId, ':achId' => $achId]);
+                    if (!$stmtCheckUnlock->fetchColumn()) {
+                        $stmtInsertAch = $db->prepare('INSERT INTO Achievement_association (user_id, achievement_id) VALUES (:userId, :achId)');
+                        $stmtInsertAch->execute([':userId' => $userId, ':achId' => $achId]);
+                    }
+                }
+                header('Location: /game?id=' . $gameId);
+                exit;
+            }
+        }
+
+        render('game', [
+            'title'        => $game['game_name'],
+            'username'     => $username,
+            'isAdmin'      => $auth->isAdmin($userId),
+            'game'         => $game,
+            'achievements' => $achievements,
+            'unlockedIds'  => $unlockedIds,
+            'ownsGame'     => $ownsGame,
+        ]);
+        break;
 
     case '/admin':
         if ($auth->isAdmin($userId) === false) {
