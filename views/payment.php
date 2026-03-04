@@ -1,10 +1,10 @@
 <?php
 require(__DIR__ . '/../src/refactorer.php');
 $username = $username ?? false;
-$isAdmin = $isAdmin ?? false;
 $gameId = $_GET['game_id'] ?? null;
 $gameInfo = [];
 $game = $game ?? null;
+$alreadyOwned = $alreadyOwned ?? false;
 ?>
 
 <!doctype html>
@@ -63,14 +63,19 @@ $game = $game ?? null;
                                 <?php endif; ?>
                             </div>
 
-                            <div class="pay-actions">
-                                <form action="/payment" method="post">
-                                    <input type="hidden" name="game_id" value="<?= (int)$gameId ?>">
-                                    <input type="hidden" name="confirm" value="1">
-                                    <button type="submit" class="btn-confirm">Confirmer le paiement</button>
-                                </form>
 
-                                <a href="/" class="btn-cancel">Annuler</a>
+                            <div class="pay-actions">
+                                <?php if (!empty($alreadyOwned)): ?>
+                                    <p class="pay-owned">Vous possédez déjà ce jeu dans votre bibliothèque.</p>
+                                    <a href="/" class="btn-confirm">Retour à la boutique</a>
+                                <?php else: ?>
+                                    <form action="/payment" method="post">
+                                        <input type="hidden" name="game_id" value="<?= (int)$gameId ?>">
+                                        <input type="hidden" name="confirm" value="1">
+                                        <button type="submit" class="btn-confirm">Confirmer le paiement</button>
+                                    </form>
+                                    <a href="/" class="btn-cancel">Annuler</a>
+                                <?php endif; ?>
                             </div>
                         </div>
 
