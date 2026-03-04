@@ -17,7 +17,7 @@ $fields = parse_url($uri);
 $conn = "mysql:";
 $conn .= "host=" . $_ENV["DB_HOST"];
 $conn .= ";port=" . $_ENV["DB_PORT"];
-$conn .= ";dbname=jeux-epiques";
+$conn .= ";dbname=jeux-epiques" ;
 $conn .= ";sslmode=verify-ca;sslrootcert=ca.pem";
 
 try {
@@ -98,11 +98,24 @@ switch ($path) {
 
             if ($stmtCheck->fetchColumn()) {
                 $alreadyOwned = true;
+                $message = 'Vous possédez déjà ce jeu.';
             } else {
-                $stmtInsert = $db->prepare('INSERT INTO Library_game (id_user, id_game) VALUES (:userId, :gameId)');
-                $stmtInsert->execute([':userId' => $userId, ':gameId' => $gameId]);
-                header('Location: /library');
-                exit;
+                try {
+                    $gameTime = rand(0, 500);
+                    $addedDate = date('Y-m-d H:i:s');
+                    $stmtInsert = $db->prepare('INSERT INTO Library_game (id_user, id_game, game_time, added_date) VALUES (:userId, :gameId, :gameTime, :addedDate)');
+                    $stmtInsert->execute([
+                        ':userId' => $userId,
+                        ':gameId' => $gameId,
+                        ':gameTime' => $gameTime,
+                        ':addedDate' => $addedDate
+                    ]);
+                    header('Location: /library');
+                    exit;
+                } catch (PDOException $e) {
+                    $message = 'Erreur lors du paiement : ' . $e->getMessage();
+                    error_log($e->getMessage());
+                }
             }
         }
 
@@ -127,14 +140,6 @@ switch ($path) {
             'message'      => $message,
         ]);
         break;
-
-
-    case '/process-payment':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            require __DIR__ . '/../src/controllers/ProcessPaymentController.php';
-        }
-        break;
-
 
 
     case '/admin':

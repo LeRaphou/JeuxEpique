@@ -64,10 +64,12 @@ $game = $game ?? null;
                             </div>
 
                             <div class="pay-actions">
-                                <form action="/process-payment" method="post">
+                                <form action="/payment" method="post">
                                     <input type="hidden" name="game_id" value="<?= (int)$gameId ?>">
+                                    <input type="hidden" name="confirm" value="1">
                                     <button type="submit" class="btn-confirm">Confirmer le paiement</button>
                                 </form>
+
                                 <a href="/" class="btn-cancel">Annuler</a>
                             </div>
                         </div>
