@@ -39,7 +39,7 @@ $isAdmin = $isAdmin ?? false;
         </div>
 
         <nav class="sidebar-nav">
-            <a href="#" class="s-btn" title="Accueil">
+            <a href="/" class="s-btn" title="Accueil">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                     <polyline points="9,22 9,12 15,12 15,22"/>
@@ -135,7 +135,7 @@ $isAdmin = $isAdmin ?? false;
                         <form action="/admin" method="post" enctype="multipart/form-data" class="admin-form">
                             <?php if ($editGame): ?>
                                 <input type="hidden" name="action" value="edit_game">
-                                <input type="hidden" name="id"
+                                <input type="hidden" name="edit_game_id"
                                        value="<?= htmlspecialchars($editGame['id']) ?>">
                             <?php else: ?>
                                 <input type="hidden" name="action" value="add_game">
@@ -225,7 +225,7 @@ $isAdmin = $isAdmin ?? false;
                                                 <form action="/admin" method="post" style="display:inline;"
                                                       onsubmit="return confirm('Supprimer ce amusement vidéoludique ?');">
                                                     <input type="hidden" name="action" value="delete_game">
-                                                    <input type="hidden" name="id"
+                                                    <input type="hidden" name="delete_game_id"
                                                            value="<?= htmlspecialchars($game['id']) ?>">
                                                     <button type="submit" class="btn btn-danger btn-sm">Supprimer
                                                     </button>
@@ -269,7 +269,7 @@ $isAdmin = $isAdmin ?? false;
                                     <td><?= htmlspecialchars($user['phone'] ?? '—') ?></td>
                                     <td>
                                         <?php
-                                        $isUserAdmin = isset($user['is_admin']) && $user['is_admin'];
+                                        $isUserAdmin = isset($user['admin']) && $user['admin'];
                                         ?>
                                         <span class="user-role <?= $isUserAdmin ? 'role-admin' : 'role-user' ?>">
                                     <?= $isUserAdmin ? 'Admin' : 'Utilisateur' ?>
@@ -282,11 +282,13 @@ $isAdmin = $isAdmin ?? false;
                                                 <input type="hidden" name="action" value="toggle_admin">
                                                 <input type="hidden" name="id"
                                                        value="<?= htmlspecialchars($user['id']) ?>">
-                                                <input type="hidden" name="is_admin"
+                                                <input type="hidden" name="admin"
                                                        value="<?= $isUserAdmin ? '0' : '1' ?>">
                                                 <button type="submit"
-                                                        class="btn <?= $isUserAdmin ? 'btn-secondary' : 'btn-success' ?> btn-sm">
-                                                    <?= $isUserAdmin ? 'Rétrograder' : 'Promouvoir' ?>
+                                                        class="btn <?= $isUserAdmin ? 'btn-secondary' : 'btn-success' ?> btn-sm"<?php if ($isUserAdmin) {
+                                                    echo 'disabled="disabled"';
+                                                } ?>>
+                                                    <?= $isUserAdmin ? 'Déja Admin' : 'Promouvoir' ?>
                                                 </button>
                                             </form>
 
