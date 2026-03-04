@@ -35,7 +35,7 @@ $isAdmin = $isAdmin ?? false;
 <div class="launcher">
     <aside class="sidebar">
         <div class="sidebar-logo">
-            <img src="/assets/images/jeux_epiques_logo.png" class="sidebar-logo">
+            <img src="/assets/images/jeux_epiques_logo.png" alt="Logo Jeux Épiques" class="sidebar-logo"/>
         </div>
 
         <nav class="sidebar-nav">
@@ -45,7 +45,7 @@ $isAdmin = $isAdmin ?? false;
                     <polyline points="9,22 9,12 15,12 15,22"/>
                 </svg>
             </a>
-            <a href="#" class="s-btn" title="Bibliothèque">
+            <a href="/library" class="s-btn" title="Bibliothèque">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
                     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
@@ -55,26 +55,14 @@ $isAdmin = $isAdmin ?? false;
 
         <div class="sidebar-bottom">
             <?php if ($isAdmin) : ?>
-                <a href="/admin" class="s-btn active" title="Admin">
+                <a href="/admin" class="s-btn" title="Admin">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 1v2"/>
-                        <path d="M12 21v2"/>
-                        <path d="M4.22 4.22l1.42 1.42"/>
-                        <path d="M18.36 18.36l1.42 1.42"/>
-                        <path d="M1 12h2"/>
-                        <path d="M21 12h2"/>
-                        <path d="M4.22 19.78l1.42-1.42"/>
-                        <path d="M18.36 5.64l1.42-1.42"/>
+                        <path fill="currentColor"
+                              d="M12 14v2a6 6 0 0 0-6 6H4a8 8 0 0 1 8-8m0-1c-3.315 0-6-2.685-6-6s2.685-6 6-6s6 2.685 6 6s-2.685 6-6 6m0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4m9 6h1v5h-8v-5h1v-1a3 3 0 1 1 6 0zm-2 0v-1a1 1 0 1 0-2 0v1z"/>
                     </svg>
                 </a>
             <?php endif; ?>
             <?php if ($username !== false): ?>
-                <a href="#" class="s-btn" title="Paramètres">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="3"/>
-                        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
-                    </svg>
-                </a>
                 <a href="#user_modal" class="s-avatar">
                     <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar"/>
                     <span class="online-dot"></span>
