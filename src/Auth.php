@@ -125,7 +125,7 @@ class Auth
         return $user["username"];
     }
 
-    public function getUserRole(int|false $userId): bool
+    public function isAdmin(int|false $userId): bool
     {
         if ($userId === false) {
             return false;
@@ -142,10 +142,10 @@ class Auth
 
         $user = $stmt->fetchColumn();
 
-        if ($user === false) {
+        if ($user === 0) {
             return false;
         }
 
-        return boolval($user);
+        return true;
     }
 }
