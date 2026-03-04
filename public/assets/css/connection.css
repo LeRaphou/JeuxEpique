@@ -1,7 +1,3 @@
-/*
-   Login page styles matching home.css design system
-*/
-
 * {
     box-sizing: border-box;
 }
@@ -83,7 +79,6 @@ button[type="submit"]:active {
     transform: translateY(1px);
 }
 
-/* Subtle divider to match the app chrome style if needed later */
 .container::after {
     content: '';
     display: block;
