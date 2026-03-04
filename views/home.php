@@ -6,6 +6,7 @@ $currentSlide = 0;
 $username = $username ?? false;
 $isAdmin = $isAdmin ?? false;
 ?>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -51,7 +52,7 @@ $isAdmin = $isAdmin ?? false;
                     <path d="M16 10a4 4 0 01-8 0"/>
                 </svg>
             </a>
-            <a href="#" class="s-btn" title="Bibliothèque">
+            <a href="/library.php" class="s-btn" title="Bibliothèque">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
                     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
@@ -168,24 +169,26 @@ $isAdmin = $isAdmin ?? false;
                                 <img src="data:image/png;base64, <?= htmlspecialchars($g['game_image']) ?>"
                                      alt="<?= htmlspecialchars($g['game_name']) ?>" loading="lazy"/>
                                 <div class="store-hover-overlay">
-                                    <button class="btn-cart-quick">
+                                    <a href="/payment?game_id=<?= (int)$g['id'] ?>" class="btn-cart-quick">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <circle cx="9" cy="21" r="1"/>
-                                            <circle cx="20" cy="21" r="1"/>
-                                            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                                            <path d="M12 5v14M5 12h14"/>
                                         </svg>
                                         Ajouter
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                             <div class="store-info">
                                 <span class="store-game-name"><?= htmlspecialchars($g['game_name']) ?></span>
                                 <div class="store-price-row">
-                                    <span class="store-price <?= $g['price'] === 0.0 ? 'free' : '' ?>"><?= $g['price'] === 0.0 ? "Gratuit" : refactorPrice(htmlspecialchars($g['price'])) . "€" ?></span>
+                <span class="store-price <?= $g['price'] === 0.0 ? 'free' : '' ?>">
+                    <?= $g['price'] === 0.0 ? "Gratuit" : refactorPrice(htmlspecialchars($g['price'])) . "€" ?>
+                </span>
                                 </div>
                             </div>
                         </div>
                     <?php endforeach; ?>
+
+
                 </div>
             </section>
 
